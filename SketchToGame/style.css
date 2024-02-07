@@ -1,15 +1,43 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    background: black;
-}
-canvas {
-    display: block;
+
+body {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 12px;
+    color: #333;
 }
 
-.canvas-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+button {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 12px;
+    background-color: #ff5722;
+    color: #fff;
+    padding: 15px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 0px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #d84315;
+}
+
+/* input box */
+input[type="text"],
+input[type="password"],
+textarea {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 16px;
+    padding: 10px;
+    border: 3px solid #333;
+    border-radius: 0px;
+    background-color: white;
+    color: #333;
+    outline: none;
+}
+
+/*focussed input box*/
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    border-color: #ff5722;
 }
