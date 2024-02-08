@@ -11,6 +11,9 @@ const fontSize = 16;
 // role management
 let roleLastUpdate;
 
+// sound
+let msgSent, msgReceived;
+
 // vars
 const maxCharCountMsg = 30;
 const maxCharCountName = 12;
@@ -29,13 +32,16 @@ function preload() {
     // load shared objects
     me = partyLoadMyShared();
     guests = partyLoadGuestShareds();
+
+    msgSent = loadSound("audio/sentMessage.mp3");
+    msgReceived = loadSound("audio/newMessage.mp3");
     
     // create roles up to max player count.
     // if beyond, assign role to "none"
     new RoleKeeper([...Array(maxPlayerCount).keys()].map(x => x + 1), "none");
 }
 function setup() {
-    // setupPlayerID();
+    userStartAudio();
     setupHTML();
 
     // subscribe to message event
@@ -117,6 +123,8 @@ function receiveMsg(data) {
     msg[0] = msg[0] === "" ? "user" + roleLastUpdate : msg[0];
     textBox.push(createElement('p', msg[0] +": " + msg[1]));
     timers.push(0);
+
+    (msg[2] === roleLastUpdate ? msgSent : msgReceived).play();
     
     for (i = 0; i < textBox.length; i++) {
         textBox[i].position(20, textBox.length * 30 - (i + 1)*30 + 160);
@@ -125,7 +133,7 @@ function receiveMsg(data) {
 
 function sendMsg() {
     if (msgInput.value() != '') {
-        const msg = [nameInput.value(), msgInput.value()];
+        const msg = [nameInput.value(), msgInput.value(), roleLastUpdate];
         msgInput.value('');
         partyEmit("message", msg);
     }
