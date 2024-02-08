@@ -16,10 +16,10 @@ let msgSent, msgReceived;
 
 // vars
 const maxCharCountMsg = 30;
-const maxCharCountName = 12;
+const maxCharCountName = 10;
 const maxPlayerCount = 4;
 const timePerMessage = 4; // time before message falls
-const gravity = 9.81;
+const gravity = 10;
 
 function partyIsFull() {
     return me.role_keeper.role === "none";
