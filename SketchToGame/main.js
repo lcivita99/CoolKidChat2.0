@@ -6,21 +6,16 @@ let nameInput, msgInput, button, title, fullParty;
 let textBox = [];
 let timers = [];
 let fallingTextBoxes = [];
-    
-//     {
-//     text : null,
-//     fallSpeed : null,
-//     curPosX : null,
-//     curPosY : null
-// };
+const fontSize = 16;
 
 // role management
 let roleLastUpdate;
 
 // vars
-const maxCharCount = 50;
+const maxCharCountMsg = 30;
+const maxCharCountName = 12;
 const maxPlayerCount = 4;
-const timePerMessage = 3; // time before message dissapears
+const timePerMessage = 4; // time before message falls
 const gravity = 9.81;
 
 function partyIsFull() {
@@ -57,16 +52,18 @@ function draw() {
         changedRole(me.role_keeper.role);
     }
     roleLastUpdate = role;
+    
     for (i = 0; i < timers.length; i++) {
         timers[i] += deltaTime / 1000;
         if (timers[i] > timePerMessage) {
             fallingTextBoxes.push({
                 text: createElement('p', textBox[i].elt.innerText),
                 fallSpeed: 0,
-                curPosX: textBox[i].position.x,
-                curPosY: textBox[i].position.y
+                curPosX: textBox[i].position().x,
+                curPosY: textBox[i].position().y
             });
-            fallingTextBoxes[i].text.position(textBox[i].position.x + 30, textBox[i].position.y);
+            
+            fallingTextBoxes[i].text.position(textBox[i].position().x, textBox[i].position().y - fontSize);
             textBox[i].remove();
             textBox.splice(i, 1);
             timers.splice(i, 1);
@@ -86,10 +83,12 @@ function createInputFields() {
     nameInput = createInput();
     nameInput.position(20, 10);
     nameInput.attribute('placeholder', 'username');
+    nameInput.attribute('maxlength', maxCharCountName);
 
     msgInput = createInput();
     msgInput.position(20, 60);
     msgInput.attribute('placeholder', 'message');
+    msgInput.attribute('maxlength', maxCharCountMsg);
 
     button = createButton('send');
     button.position(msgInput.x + msgInput.width, 60);
@@ -97,13 +96,13 @@ function createInputFields() {
 }
 
 function displayPartyIsFull() {
-    fullParty = createElement('h3', 'party is full...');
+    fullParty = createElement('h3', 'ur not invited.');
     fullParty.position(20, 30);
 }
 
 function displayTitle() {
-    title = createElement('h1', 'Cool Kid Chat');
-    title.position(20, 100);
+    title = createElement('h1', 'Cool Kid Chat 2.0');
+    title.position(20, 95);
 }
 
 function changedRole(newRole) {
@@ -115,11 +114,12 @@ function changedRole(newRole) {
 
 function receiveMsg(data) {
     const msg = data;
+    msg[0] = msg[0] === "" ? "user" + roleLastUpdate : msg[0];
     textBox.push(createElement('p', msg[0] +": " + msg[1]));
     timers.push(0);
     
     for (i = 0; i < textBox.length; i++) {
-        textBox[i].position(20, textBox.length * 30 - (i + 1)*30 + 150);
+        textBox[i].position(20, textBox.length * 30 - (i + 1)*30 + 160);
     }
 }
 
@@ -133,9 +133,13 @@ function sendMsg() {
 
 function textboxFall() {
     for (i = 0; i < fallingTextBoxes.length; i++) {
-        fallingTextBoxes[i].fallSpeed += gravity * deltaTime;
+        fallingTextBoxes[i].text.position(20, fallingTextBoxes[i].curPosY - fontSize);
+        fallingTextBoxes[i].fallSpeed += gravity * deltaTime / 1000;
         fallingTextBoxes[i].curPosY += fallingTextBoxes[i].fallSpeed;
         
-        fallingTextBoxes[i].text.position(fallingTextBoxes[i].curPosX, fallingTextBoxes[i].curPosY);
+        if (fallingTextBoxes[i].fallSpeed >= 30) {
+            fallingTextBoxes[i].text.remove();
+            fallingTextBoxes.splice(i, 1);
+        }
     }
 }

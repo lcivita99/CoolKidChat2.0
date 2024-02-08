@@ -1,13 +1,25 @@
 
 body {
-    font-family: 'Press Start 2P', sans-serif;
-    font-size: 12px;
-    color: #333;
+    font-family: "Pixelify Sans", sans-serif;
+    font-size: 16px;
+    color: white;
+    background: black;
+    overflow: hidden;
+}
+
+h1 {
+    font-family: "Nabla", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+            "EDPT" 100,
+            "EHLT" 12;
 }
 
 button {
-    font-family: 'Press Start 2P', sans-serif;
-    font-size: 12px;
+    font-family: "Pixelify Sans", sans-serif;
+    font-size: 16px;
     background-color: #ff5722;
     color: #fff;
     padding: 15px 10px;
@@ -25,8 +37,8 @@ button:hover {
 input[type="text"],
 input[type="password"],
 textarea {
-    font-family: 'Press Start 2P', sans-serif;
-    font-size: 16px;
+    font-family: "Pixelify Sans", sans-serif;
+    font-size: 20px;
     padding: 10px;
     border: 3px solid #333;
     border-radius: 0px;
