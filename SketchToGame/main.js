@@ -1,3 +1,6 @@
+// using p5.party library
+// influenced by role_keeper example https://p5party.org/examples/role_keeper/
+
 // shared objects
 let guests, me;
 
@@ -33,6 +36,7 @@ function preload() {
     me = partyLoadMyShared();
     guests = partyLoadGuestShareds();
 
+    // load sound
     msgSent = loadSound("audio/sentMessage.mp3");
     msgReceived = loadSound("audio/newMessage.mp3");
     
