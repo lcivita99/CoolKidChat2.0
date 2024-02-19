@@ -8,4 +8,5 @@ to join the coveted cool kid group.
 Have fun with it!
 
 Made for Justin Bakse's p5 Party library and class during my MFA studies at The New School.
+
 https://p5party.org
